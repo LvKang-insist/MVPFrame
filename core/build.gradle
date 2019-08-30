@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'junit:junit:4.12'
+    api 'androidx.test:runner:1.2.0'
+    api 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //jetPack 之 Navigation
+    api 'android.arch.navigation:navigation-fragment:1.0.0'
+    api 'android.arch.navigation:navigation-ui:1.0.0'
+    api 'android.arch.navigation:navigation-testing:1.0.0-alpha08'
+
+    //ButterKnife
+    api 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+}

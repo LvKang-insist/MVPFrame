@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    tools:ignore="UnusedNavigation"
+    app:startDestination="@id/testFragment2">
+    <fragment
+        android:id="@+id/testFragment2"
+        android:name="com.latte.test.test.TestFragment"
+        android:label="TestFragment" />
+</navigation>
