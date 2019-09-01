@@ -4,9 +4,10 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
-import com.latte.core.R;
+import com.hjq.toast.ToastUtils;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.view.BaseMvpFragment;
+import com.latte.test.R;
 
 
 @CreatePresenter(TestPresenterImpl.class)
@@ -24,7 +25,7 @@ public class TestFragment extends BaseMvpFragment<TestPresenterImpl> implements 
         view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ToastUtils.show("我是吐司");
             }
         });
         alertDialog = new AlertDialog.Builder(getContext()).create();

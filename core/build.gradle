@@ -37,8 +37,16 @@ dependencies {
     api 'android.arch.navigation:navigation-fragment:1.0.0'
     api 'android.arch.navigation:navigation-ui:1.0.0'
     api 'android.arch.navigation:navigation-testing:1.0.0-alpha08'
+    //jetPack 之 Lifecycle
+    api "androidx.lifecycle:lifecycle-runtime:2.0.0"
 
     //ButterKnife
     api 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    //Toast
+    api 'com.hjq:toast:5.0'
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.latte.core.mvp.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,7 @@ import com.latte.core.mvp.presenter.IBasePresenter;
  * @name MvpFrame
  * @class name：com.latte.core.mvp.view
  * @time 2019/8/30 17:12
- * @description 抽象类， Activity 必须继承此类，该类会调用 P 层的生命周期方法
+ * @description 抽象类， Activity 必须继承此类
  */
 public abstract class BaseMvpActivity<P extends IBasePresenter> extends BaseActivity implements IBaseView {
 
@@ -45,38 +46,8 @@ public abstract class BaseMvpActivity<P extends IBasePresenter> extends BaseActi
                 .withBaseMvpActivity(this)
                 .configure();
         BindView();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mPresenter != null){
-            mPresenter.onMvpStart();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mPresenter != null){
-            mPresenter.onMvpResume();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mPresenter != null){
-            mPresenter.onMvpPause();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mPresenter != null){
-            mPresenter.onMvpStop();
-        }
+        //将 Lifecycle 对象和LifecycleObserver 对象进行绑定
+        getLifecycle().addObserver(mPresenter);
     }
 
     @Override
@@ -84,15 +55,6 @@ public abstract class BaseMvpActivity<P extends IBasePresenter> extends BaseActi
         super.onSaveInstanceState(outState);
         if (mPresenter != null){
             mPresenter.onMvpSaveInstanceState(outState);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null){
-            mPresenter.onMvpDetachView(false);
-            mPresenter.onMvpDestroy();
         }
     }
 

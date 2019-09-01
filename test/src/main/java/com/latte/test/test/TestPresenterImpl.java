@@ -1,6 +1,8 @@
 package com.latte.test.test;
 
 
+import android.util.Log;
+
 import com.latte.core.mvp.model.BaseModel;
 import com.latte.core.mvp.presenter.BasePresenter;
 
@@ -25,5 +27,15 @@ public class TestPresenterImpl extends BasePresenter<TestContract.TestView,TestM
     }
 
 
+    @Override
+    public void onMvpStart() {
+        super.onMvpStart();
+        Log.e("---------", "onMvpStart: " );
+    }
 
+    @Override
+    public void onMvpStop() {
+        super.onMvpStop();
+        Log.e("---------", "onMvpStart: " );
+    }
 }

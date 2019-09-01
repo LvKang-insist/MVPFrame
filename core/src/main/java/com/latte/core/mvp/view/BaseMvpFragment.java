@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleRegistry;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import com.latte.core.mvp.base.BaseFragment;
@@ -26,7 +28,7 @@ import butterknife.Unbinder;
  * @description 抽象类， Fragment 必须继承此类，该类会调用 P 层的生命周期方法
  */
 public abstract class BaseMvpFragment<P extends IBasePresenter> extends BaseFragment
-        implements IBaseView, BaseMvpActivity.OnBackPressListener {
+        implements IBaseView, BaseMvpActivity.OnBackPressListener  {
 
     private P mPresenter;
 
@@ -61,43 +63,13 @@ public abstract class BaseMvpFragment<P extends IBasePresenter> extends BaseFrag
         //绑定 ButterKnife
         unbinder = ButterKnife.bind(this,rootView);
         BindView(rootView);
+        //将 Lifecycle 对象和LifecycleObserver 对象进行绑定
+        getLifecycle().addObserver(mPresenter);
         return rootView;
     }
 
     public P getPresenter(){
         return mPresenter;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mPresenter != null) {
-            mPresenter.onMvpStart();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mPresenter != null) {
-            mPresenter.onMvpResume();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mPresenter != null) {
-            mPresenter.onMvpPause();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mPresenter != null) {
-            mPresenter.onMvpStop();
-        }
     }
 
     @Override
@@ -120,10 +92,6 @@ public abstract class BaseMvpFragment<P extends IBasePresenter> extends BaseFrag
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.onMvpDetachView(false);
-            mPresenter.onMvpDestroy();
-        }
         unbinder = null;
         rootView = null;
     }

@@ -1,6 +1,12 @@
 package com.latte.core.mvp.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+
 import com.latte.core.mvp.model.BaseModel;
 import com.latte.core.mvp.view.IBaseView;
 
@@ -13,7 +19,11 @@ import java.lang.ref.WeakReference;
  * @time 2019/8/30 17:12
  * @description P层基类 需要被继承，内部对生命周期进行代理，可直接在 P 层使用生命周期
  */
-public abstract class BasePresenter<V extends IBaseView, M extends BaseModel> implements IBasePresenter<V> {
+public abstract class BasePresenter<V extends IBaseView, M extends BaseModel>
+        implements IBasePresenter<V>  {
+
+    private static final String TAG = "BasePresenter";
+
     private WeakReference<V> viewRef;
     private WeakReference<M> modelRef;
 
@@ -42,45 +52,36 @@ public abstract class BasePresenter<V extends IBaseView, M extends BaseModel> im
     }
 
     @Override
-    public void onMvpStart() {
-
-    }
-
-    @Override
-    public void onMvpResume() {
-
-    }
-
-    @Override
-    public void onMvpPause() {
-
-    }
-
-    @Override
-    public void onMvpStop() {
-
-    }
-
-    @Override
     public void onMvpSaveInstanceState(Bundle savedInstanceState) {
 
     }
 
-    private void death(boolean retainInstance) {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    public void onMvpCreate(){
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    public void onMvpStart() {
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void onMvpResume() {
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    public void onMvpPause() {
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    public void onMvpStop() {
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    public void onMvpDestroy() {
         if (viewRef != null) {
             viewRef.clear();
             viewRef = null;
         }
-    }
-
-
-    @Override
-    public void onMvpDetachView(boolean retainInstance) {
-        death(retainInstance);
-    }
-
-    @Override
-    public void onMvpDestroy() {
-
     }
 }
