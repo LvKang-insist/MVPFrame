@@ -1,11 +1,13 @@
 package com.latte.test.test;
+
+import androidx.lifecycle.MutableLiveData;
+
 import com.latte.core.latte.Latte;
 import com.latte.core.mvp.model.BaseModel;
 
-public class TestModel extends BaseModel {
-
+public class TestModel<T> extends BaseModel {
     @Override
-    public void request(String json, final BaseModel.onRequestDataListener listener) {
+    public MutableLiveData<T> request(String url, Object... objects) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -14,7 +16,8 @@ public class TestModel extends BaseModel {
                     Latte.getHandler().post(new Runnable() {
                         @Override
                         public void run() {
-                            listener.onRequest("请求成功，哈哈哈哈哈");
+                            String aa = "哈哈";
+                            getLiveData().postValue((T)aa);
                         }
                     });
                 } catch (InterruptedException e) {
@@ -22,5 +25,7 @@ public class TestModel extends BaseModel {
                 }
             }
         }).start();
+        return getLiveData();
     }
+
 }

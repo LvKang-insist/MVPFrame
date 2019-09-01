@@ -25,7 +25,7 @@ public class TestFragment extends BaseMvpFragment<TestPresenterImpl> implements 
         view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.show("我是吐司");
+               getPresenter().upLiveData("我是参数");
             }
         });
         alertDialog = new AlertDialog.Builder(getContext()).create();

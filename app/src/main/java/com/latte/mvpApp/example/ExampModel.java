@@ -1,5 +1,7 @@
 package com.latte.mvpApp.example;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.latte.core.mvp.model.BaseModel;
 
 /**
@@ -10,8 +12,9 @@ import com.latte.core.mvp.model.BaseModel;
  * @description M层
  */
 public class ExampModel extends BaseModel {
+
     @Override
-    public void request(String json, onRequestDataListener listener) {
-        super.request(json, listener);
+    public MutableLiveData request(String url, Object... objects) {
+        return null;
     }
 }
