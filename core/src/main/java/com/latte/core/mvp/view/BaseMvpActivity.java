@@ -1,12 +1,15 @@
 package com.latte.core.mvp.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 
+import com.latte.core.R;
 import com.latte.core.mvp.base.BaseActivity;
+import com.latte.core.mvp.base.BaseDelegate;
 import com.latte.core.mvp.factory.PresenterFactoryImpl;
 import com.latte.core.latte.Latte;
 import com.latte.core.mvp.presenter.IBasePresenter;
@@ -21,11 +24,14 @@ import com.latte.core.mvp.presenter.IBasePresenter;
 public abstract class BaseMvpActivity<P extends IBasePresenter> extends BaseActivity implements IBaseView {
 
     public P mPresenter;
-    public abstract int setLayout();
+
+    public abstract BaseDelegate setRootDelegate();
+
     public abstract void BindView();
+
     public OnBackPressListener onBackPress;
 
-    public interface OnBackPressListener{
+    public interface OnBackPressListener {
         boolean setBackPress();
     }
 
@@ -36,42 +42,43 @@ public abstract class BaseMvpActivity<P extends IBasePresenter> extends BaseActi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(setLayout());
+        //加载根fragment
+        FrameLayout container = new FrameLayout(this);
+        container.setId(R.id.delegate_container);
+        setContentView(container);
+        initContainer(savedInstanceState);
+    }
+
+    private void initContainer(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            DELEGATE.loadRootFragment(R.id.delegate_container, setRootDelegate());
+        }
         mPresenter = (P) PresenterFactoryImpl.createPresenterFactory(getClass());
-        if (mPresenter == null){
+        if (mPresenter == null) {
             throw new NullPointerException("Presenter is null ! Do you return null in createPresenter()?");
         }
-        mPresenter.onMvpAttachView(this,savedInstanceState);
+        mPresenter.onMvpAttachView(this, savedInstanceState);
         Latte.init(this)
                 .withBaseMvpActivity(this)
                 .configure();
         BindView();
-        //将 Lifecycle 对象和LifecycleObserver 对象进行绑定
+//        将 Lifecycle 对象和LifecycleObserver 对象进行绑定
         getLifecycle().addObserver(mPresenter);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.onMvpSaveInstanceState(outState);
         }
     }
 
-    @Override
+  /*  @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (onBackPress!=null && onBackPress.setBackPress()){
+        if (onBackPress != null && onBackPress.setBackPress()) {
             return true;
         }
         return super.onKeyUp(keyCode, event);
-    }
-//    /**
-//     * 重写 这个方法，目的是将 back 事件委托出去。
-//     * 若栈中有两个以上Fragment，点击back 就会返回到上一个 fragment
-//     */
-    /*@Override
-    public boolean onSupportNavigateUp() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_fragment);
-        return NavHostFragment.findNavController(fragment).navigateUp();
     }*/
 }

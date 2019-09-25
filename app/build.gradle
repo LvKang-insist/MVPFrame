@@ -10,6 +10,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
     }
     buildTypes {
         release {
@@ -24,6 +26,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':core')
-    implementation project(path: ':subassembly')
+    api project(path: ':core')
+    api project(path: ':test')
 }

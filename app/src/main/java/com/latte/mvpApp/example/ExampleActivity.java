@@ -1,12 +1,15 @@
 package com.latte.mvpApp.example;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+import com.latte.core.mvp.base.BaseDelegate;
 
 import com.latte.core.mvp.factory.CreatePresenter;
+import com.latte.core.mvp.mvpdefault.DefaultContract;
+
+import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
 import com.latte.core.mvp.view.BaseMvpActivity;
-import com.latte.mvpApp.R;
+
+import com.latte.test.test.BottomDelegate;
+import com.latte.test.test.TextOne;
+
 /**
  * @author 345 QQ:1831712732
  * @name MvpFrame
@@ -14,17 +17,16 @@ import com.latte.mvpApp.R;
  * @time 2019/8/30 17:12
  * @description 主Activity
  */
-@CreatePresenter(ExamplePersenter.class)
-public class ExampleActivity extends BaseMvpActivity<ExamplePersenter> implements ExampleContract.IExampleView {
+@CreatePresenter(DefaultPresenterImpl.class)
+public class ExampleActivity extends BaseMvpActivity implements DefaultContract.IDefaultView{
 
     @Override
-    public int setLayout() {
-        return R.layout.activity_main;
+    public BaseDelegate setRootDelegate() {
+        return new BottomDelegate();
     }
 
     @Override
     public void BindView() {
 
     }
-
 }

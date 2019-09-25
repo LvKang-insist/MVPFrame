@@ -12,7 +12,7 @@ import com.latte.core.mvp.view.IBaseView;
  * @name MvpFrame
  * @class name：com.latte.core.mvp.presenter
  * @time 2019/8/30 17:12
- * @description P层接口 ，会被 V 的生命周期直接调用，P层生命周期与 V层同步
+ * @description P层默认接口
  */
 public interface IBasePresenter<V extends IBaseView> extends LifecycleObserver {
 
