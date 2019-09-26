@@ -2,13 +2,17 @@ package com.latte.core.delegate;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
+
 import com.latte.core.R;
 import com.latte.core.R2;
 import com.latte.core.mvp.presenter.IBasePresenter;
@@ -20,16 +24,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
  * @author 345 QQ:1831712732
  * @name MvpFrame
  * @class name：com.latte.core.delegate
  * @time 2019/9/5 21:07
- * @description
+ * @description 管理tab
  */
 
-public abstract class LatteDelegate<P extends IBasePresenter> extends BaseMvpFragment implements View.OnClickListener {
+public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpFragment
+        implements View.OnClickListener {
 
     @BindView(R2.id.bottom_bar)
     LinearLayoutCompat mBottomBar = null;
@@ -37,11 +43,16 @@ public abstract class LatteDelegate<P extends IBasePresenter> extends BaseMvpFra
     /**
      * 存储所有的子 Fragment
      */
-    private final ArrayList<BaseMvpFragment> ITEM_DELEGATES = new ArrayList<>();
+    private final ArrayList<BottomItemDelegate> ITEM_DELEGATES = new ArrayList<>();
     /**
      * 存储所有的子 TabBean
      */
     private final ArrayList<BottomTabBean> TAB_BEANS = new ArrayList<>();
+
+    /**
+     * 存储 Fragment和TabBean 的映射
+     */
+    private final LinkedHashMap<BottomTabBean, BottomItemDelegate> ITEMS = new LinkedHashMap<>();
 
     /**
      * 默认显示的delegate
@@ -49,34 +60,35 @@ public abstract class LatteDelegate<P extends IBasePresenter> extends BaseMvpFra
     private int mIndexDelegate = 0;
 
     /**
-     * 存储 Fragment和TabBean 的映射
+     * 当前显示的delegate
      */
-    private final LinkedHashMap<BottomTabBean, BaseMvpFragment> ITEMS = new LinkedHashMap<>();
+    private int mCustomDelegate = 0;
 
     /**
-     * 记录上一次点击的 item
+     * tab 的颜色
      */
-    public RelativeLayout item;
+    public int mSelectColor;
 
-    public abstract LinkedHashMap<BottomTabBean, BaseMvpFragment> setItems(ItemBuilder builder);
+    public abstract LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder);
 
     public abstract int startDelegate();
-
+    public abstract int selectColor();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mIndexDelegate = startDelegate();
+        mSelectColor = selectColor();
         //拿到工厂类的实例
         final ItemBuilder builder = ItemBuilder.builder();
         //获取 添加完成的键值对
-        final LinkedHashMap<BottomTabBean, BaseMvpFragment> items = setItems(builder);
+        final LinkedHashMap<BottomTabBean, BottomItemDelegate> items = setItems(builder);
         //将 键值对 保存在ITEMS 中
         ITEMS.putAll(items);
         //拿到键和值
-        for (Map.Entry<BottomTabBean, BaseMvpFragment> item : ITEMS.entrySet()) {
+        for (Map.Entry<BottomTabBean, BottomItemDelegate> item : ITEMS.entrySet()) {
             final BottomTabBean key = item.getKey();
-            final BaseMvpFragment value = item.getValue();
+            final BottomItemDelegate value = item.getValue();
             TAB_BEANS.add(key);
             ITEM_DELEGATES.add(value);
         }
@@ -90,7 +102,6 @@ public abstract class LatteDelegate<P extends IBasePresenter> extends BaseMvpFra
 
     @Override
     public void BindView(View view) {
-        mBottomBar.setBackgroundColor(Color.RED);
         final int size = ITEMS.size();
         for (int i = 0; i < size; i++) {
             //第一个参数 布局，第二个参数 为给第一个参数加载的布局 设置一个父布局
@@ -100,47 +111,46 @@ public abstract class LatteDelegate<P extends IBasePresenter> extends BaseMvpFra
             item.setOnClickListener(this);
             //设置每个 item的点击事件 和标记
             item.setTag(i);
-//            item.setOnClickListener(this);
             //拿到 item 的第一个和 第二个子布局
-            final AppCompatTextView itemIcon = (AppCompatTextView) item.getChildAt(0);
+            final AppCompatImageView itemIcon = (AppCompatImageView) item.getChildAt(0);
             final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
 
             //获取 集合中对应的 Tab
             final BottomTabBean bean = TAB_BEANS.get(i);
-
             //初始化 tab 数据
-            itemIcon.setText(bean.getIcon().toString());
+            itemIcon.setImageResource(bean.getIcon());
             itemTitle.setText(bean.getTitle());
-            if (i == mIndexDelegate){
-                itemIcon.setTextColor(Color.RED);
-                itemTitle.setTextColor(Color.RED);
+            if (i == mIndexDelegate) {
+                itemTitle.setTextColor(mSelectColor);
             }
         }
-        //默认打开的delegate
-//        setTab(mBottomBar.getChildAt(pos));
-        getSupportDelegate().loadRootFragment(R.id.bottom_bar_delegate_container,ITEM_DELEGATES.get(mIndexDelegate));
+        final ISupportFragment[] delegateArray = ITEM_DELEGATES.toArray(new ISupportFragment[size]);
+        //加载多个同级 delegate,中间为要显示的delegate
+        getSupportDelegate().loadMultipleRootFragment(R.id.bottom_bar_delegate_container, mIndexDelegate, delegateArray);
+        mCustomDelegate = mIndexDelegate;
     }
 
     @Override
     public void onClick(View view) {
-//        setTab(view);
-    }
-/*
-    protected void setTab(View tab) {
-        defaultTab();
-        this.item = (RelativeLayout) tab;
-        final AppCompatTextView itemIcon = (AppCompatTextView) item.getChildAt(0);
-        final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
-        itemIcon.setTextColor(Color.RED);
-        itemTitle.setTextColor(Color.RED);
+        setTab(view);
     }
 
+    protected void setTab(View tab) {
+        int pos = (int) tab.getTag();
+        RelativeLayout item = (RelativeLayout) mBottomBar.getChildAt(pos);
+        defaultTab();
+        final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
+        itemTitle.setTextColor(mSelectColor);
+        //显示delegate
+        getSupportDelegate().showHideFragment(ITEM_DELEGATES.get(pos), ITEM_DELEGATES.get(mCustomDelegate));
+        mCustomDelegate = pos;
+    }
     protected void defaultTab() {
-        if (item != null) {
-            final AppCompatTextView itemIcon = (AppCompatTextView) item.getChildAt(0);
+        final int size = mBottomBar.getChildCount();
+        for (int i = 0; i < size; i++) {
+            RelativeLayout item = (RelativeLayout) mBottomBar.getChildAt(i);
             final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
-            itemIcon.setTextColor(Color.GRAY);
             itemTitle.setTextColor(Color.GRAY);
         }
-    }*/
+    }
 }

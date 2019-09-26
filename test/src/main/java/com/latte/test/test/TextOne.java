@@ -2,6 +2,7 @@ package com.latte.test.test;
 
 import android.view.View;
 
+import com.latte.core.delegate.BottomItemDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
@@ -17,7 +18,7 @@ import com.latte.test.R;
  */
 
 @CreatePresenter(DefaultPresenterImpl.class)
-public class TextOne extends BaseMvpFragment implements DefaultContract.IDefaultView {
+public class TextOne extends BottomItemDelegate implements DefaultContract.IDefaultView {
 
     @Override
     public Object setLayout() {

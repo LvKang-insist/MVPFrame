@@ -1,15 +1,13 @@
 package com.latte.core.mvp.view;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 
 import com.latte.core.R;
-import com.latte.core.mvp.base.BaseActivity;
-import com.latte.core.mvp.base.BaseDelegate;
+import com.latte.core.activity.BaseActivity;
+import com.latte.core.delegate.base.BaseDelegate;
 import com.latte.core.mvp.factory.PresenterFactoryImpl;
 import com.latte.core.latte.Latte;
 import com.latte.core.mvp.presenter.IBasePresenter;

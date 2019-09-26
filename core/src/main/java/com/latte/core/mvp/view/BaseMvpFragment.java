@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.latte.core.mvp.base.BaseDelegate;
+
+import com.latte.core.delegate.base.PermissionCheckerDelegate;
 import com.latte.core.mvp.factory.PresenterFactoryImpl;
 import com.latte.core.latte.Latte;
 import com.latte.core.mvp.presenter.IBasePresenter;
@@ -24,7 +25,7 @@ import butterknife.Unbinder;
  * @description 抽象类， Fragment 必须继承此类，该类会调用 P 层的生命周期方法
  */
 
-public abstract class BaseMvpFragment<P extends IBasePresenter> extends BaseDelegate
+public abstract class BaseMvpFragment<P extends IBasePresenter> extends PermissionCheckerDelegate
         implements IBaseView,  BaseMvpActivity.OnBackPressListener{
 
     private P mPresenter;
@@ -62,8 +63,7 @@ public abstract class BaseMvpFragment<P extends IBasePresenter> extends BaseDele
         BindView(rootView);
 //        将 Lifecycle 对象和LifecycleObserver 对象进行绑定
         getLifecycle().addObserver(mPresenter);
-        View inflate = LayoutInflater.from(getContext()).inflate((int) setLayout(), null);
-        return inflater.inflate((Integer) setLayout(),container,false);
+        return rootView;
     }
 
     public P getPresenter(){

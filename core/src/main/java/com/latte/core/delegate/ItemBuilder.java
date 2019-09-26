@@ -14,22 +14,22 @@ import java.util.LinkedHashMap;
  */
 public final class ItemBuilder {
 
-    private final LinkedHashMap<BottomTabBean, BaseMvpFragment> ITEMS = new LinkedHashMap<>();
+    private final LinkedHashMap<BottomTabBean, BottomItemDelegate> ITEMS = new LinkedHashMap<>();
 
     public static ItemBuilder builder(){
         return new ItemBuilder();
     }
 
-    public final void addItem(BottomTabBean bean, BaseMvpFragment delegate){
+    public final void addItem(BottomTabBean bean, BottomItemDelegate delegate){
         ITEMS.put(bean,delegate);
     }
 
-    public final ItemBuilder addItem(LinkedHashMap<BottomTabBean,BaseMvpFragment> items){
+    public final ItemBuilder addItem(LinkedHashMap<BottomTabBean,BottomItemDelegate> items){
         ITEMS.putAll(items);
         return this;
     }
 
-    public final LinkedHashMap<BottomTabBean,BaseMvpFragment> build(){
+    public final LinkedHashMap<BottomTabBean,BottomItemDelegate> build(){
         return ITEMS;
     }
 }

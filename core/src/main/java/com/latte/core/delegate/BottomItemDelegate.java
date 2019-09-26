@@ -4,16 +4,15 @@ import android.widget.Toast;
 
 import com.latte.core.mvp.view.BaseMvpFragment;
 
-import java.util.LinkedHashMap;
-
 /**
  * @author 345 QQ:1831712732
  * @name MvpFrame
  * @class name：com.latte.core.delegate
  * @time 2019/9/25 21:44
- * @description
+ * @description 所有的 tabDelegate 都必须继承自这个类
  */
-public abstract class BottomItemDelegate extends LatteDelegate {
+public abstract class BottomItemDelegate extends BaseMvpFragment {
+
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;
     private long TOUCH_TIME = 0;

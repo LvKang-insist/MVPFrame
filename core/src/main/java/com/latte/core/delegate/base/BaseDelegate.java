@@ -1,18 +1,16 @@
-package com.latte.core.mvp.base;
+package com.latte.core.delegate.base;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import butterknife.ButterKnife;
+import com.latte.core.activity.BaseActivity;
+
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportFragment;

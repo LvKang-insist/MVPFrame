@@ -26,6 +26,7 @@ android {
 }
 
 dependencies {
-    api project(path: ':core')
-    api project(path: ':test')
+
+implementation project(path: ':delegateManager')
 }
+

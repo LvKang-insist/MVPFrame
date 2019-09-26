@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.latte.core.delegate.BottomTabBean;
 import com.latte.core.delegate.ItemBuilder;
-import com.latte.core.delegate.LatteDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;

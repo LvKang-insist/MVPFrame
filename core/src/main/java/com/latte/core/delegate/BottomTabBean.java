@@ -12,18 +12,18 @@ public final class BottomTabBean {
     /**
      * 图标
      */
-    private final CharSequence ICON;
+    private final Integer ICON;
     /**
      * 文字
      */
     private final CharSequence TITLE;
 
-    public BottomTabBean(CharSequence ICON, CharSequence TITLE) {
+    public BottomTabBean(Integer ICON, CharSequence TITLE) {
         this.ICON = ICON;
         this.TITLE = TITLE;
     }
 
-    public CharSequence getIcon() {
+    public Integer getIcon() {
         return ICON;
     }
 

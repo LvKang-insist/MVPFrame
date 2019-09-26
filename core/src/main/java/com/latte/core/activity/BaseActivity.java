@@ -1,4 +1,4 @@
-package com.latte.core.mvp.base;
+package com.latte.core.activity;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

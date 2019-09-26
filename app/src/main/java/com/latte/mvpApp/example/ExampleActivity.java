@@ -1,14 +1,12 @@
 package com.latte.mvpApp.example;
-import com.latte.core.mvp.base.BaseDelegate;
+import com.car.delegate.manager.BottomDelegate;
+import com.latte.core.delegate.base.BaseDelegate;
 
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
 import com.latte.core.mvp.view.BaseMvpActivity;
-
-import com.latte.test.test.BottomDelegate;
-import com.latte.test.test.TextOne;
 
 /**
  * @author 345 QQ:1831712732
