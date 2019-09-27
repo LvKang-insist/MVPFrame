@@ -28,7 +28,6 @@ android {
 
 dependencies {
     api project(path: ':core')
-    implementation project(path: ':test')
     implementation project(path: ':customThree')
     implementation project(path: ':customFour')
     implementation project(path: ':customOne')

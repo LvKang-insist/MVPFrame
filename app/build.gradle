@@ -26,7 +26,6 @@ android {
 }
 
 dependencies {
-
-implementation project(path: ':delegateManager')
+    implementation project(path: ':delegateManager')
 }
 

@@ -1,1 +1,1 @@
-include ':app', ':core', ':subassembly', ':test', ':delegateManager', ':customOne', ':customTwo', ':customThree', ':customFour'
+include ':app', ':core', ':subassembly', ':delegateManager', ':customOne', ':customTwo', ':customThree', ':customFour'

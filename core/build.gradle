@@ -36,10 +36,7 @@ dependencies {
     api 'androidx.appcompat:appcompat:1.1.0'
     api 'junit:junit:4.12'
     api 'androidx.test:runner:1.2.0'
-//    api 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //jetPack 之 Lifecycle
-//    api "androidx.lifecycle:lifecycle-runtime:2.1.0"
 
     //ButterKnife
     api 'com.jakewharton:butterknife:10.1.0'
