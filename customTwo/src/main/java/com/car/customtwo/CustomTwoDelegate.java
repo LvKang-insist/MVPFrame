@@ -25,4 +25,6 @@ public class CustomTwoDelegate extends BottomItemDelegate {
     public void BindView(View view) {
 
     }
+
+
 }

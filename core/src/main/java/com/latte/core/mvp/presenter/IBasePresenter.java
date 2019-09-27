@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.lifecycle.LifecycleObserver;
 
+import com.latte.core.mvp.view.BaseMvpFragment;
 import com.latte.core.mvp.view.IBaseView;
 
 
@@ -22,4 +23,5 @@ public interface IBasePresenter<V extends IBaseView> extends LifecycleObserver {
     void onMvpAttachView(V view, Bundle savedInstanceState);
 
     void onMvpSaveInstanceState(Bundle savedInstanceState);
+
 }

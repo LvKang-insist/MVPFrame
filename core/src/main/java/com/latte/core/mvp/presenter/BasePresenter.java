@@ -76,7 +76,6 @@ public abstract class BasePresenter<V extends IBaseView, M extends BaseModel>
     public void onMvpStop() {
     }
 
-
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onMvpDestroy() {
         if (viewRef != null) {

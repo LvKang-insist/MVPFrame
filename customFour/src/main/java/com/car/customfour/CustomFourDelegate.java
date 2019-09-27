@@ -24,4 +24,6 @@ public class CustomFourDelegate extends BottomItemDelegate {
     public void BindView(View view) {
 
     }
+
+
 }

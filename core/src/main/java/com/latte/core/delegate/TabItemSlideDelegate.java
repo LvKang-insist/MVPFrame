@@ -6,16 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.latte.core.R;
 import com.latte.core.R2;
 import com.latte.core.mvp.presenter.IBasePresenter;
 import com.latte.core.mvp.view.BaseMvpFragment;
-
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,11 +37,13 @@ import me.yokeyword.fragmentation.ISupportFragment;
  * @description 管理tab
  */
 
-public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpFragment
+public abstract class TabItemSlideDelegate<P extends IBasePresenter> extends BaseMvpFragment
         implements View.OnClickListener {
 
-    @BindView(R2.id.bottom_bar)
+    @BindView(R2.id.bottom_slide_bar)
     LinearLayoutCompat mBottomBar = null;
+    @BindView(R2.id.bottom_bar_slide_delegate_container)
+    ViewPager mViewPager = null;
 
     /**
      * 存储所有的子 Fragment
@@ -70,6 +77,7 @@ public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpF
     public abstract LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder);
 
     public abstract int startDelegate();
+
     public abstract int selectColor();
 
     @Override
@@ -95,7 +103,7 @@ public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpF
 
     @Override
     public Object setLayout() {
-        return R.layout.bottom_delegate;
+        return R.layout.bottom_slide_delegate;
     }
 
     @Override
@@ -122,15 +130,37 @@ public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpF
                 itemTitle.setTextColor(mSelectColor);
             }
         }
-        final ISupportFragment[] delegateArray = ITEM_DELEGATES.toArray(new ISupportFragment[size]);
-        //加载多个同级 delegate,中间为要显示的delegate
-        getSupportDelegate().loadMultipleRootFragment(R.id.bottom_bar_delegate_container, mIndexDelegate, delegateArray);
-        mCustomDelegate = mIndexDelegate;
+
+        mViewPager.setAdapter(new TabItemSlideAdapter(getChildFragmentManager(), 0));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setSelectPage(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+        mViewPager.setCurrentItem(mIndexDelegate, false);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     @Override
     public void onClick(View view) {
         setTab(view);
+    }
+
+    protected void setSelectPage(int page) {
+        RelativeLayout item = (RelativeLayout) mBottomBar.getChildAt(page);
+        defaultTab();
+        final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
+        itemTitle.setTextColor(mSelectColor);
+        mCustomDelegate = page;
     }
 
     protected void setTab(View tab) {
@@ -140,9 +170,10 @@ public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpF
         final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
         itemTitle.setTextColor(mSelectColor);
         //显示delegate
-        getSupportDelegate().showHideFragment(ITEM_DELEGATES.get(pos), ITEM_DELEGATES.get(mCustomDelegate));
+        mViewPager.setCurrentItem(pos, false);
         mCustomDelegate = pos;
     }
+
     protected void defaultTab() {
         final int size = mBottomBar.getChildCount();
         for (int i = 0; i < size; i++) {
@@ -151,5 +182,24 @@ public abstract class TabItemDelegate<P extends IBasePresenter> extends BaseMvpF
             itemTitle.setTextColor(Color.GRAY);
         }
     }
+
+    class TabItemSlideAdapter extends FragmentPagerAdapter {
+
+        public TabItemSlideAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return ITEM_DELEGATES.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return ITEM_DELEGATES.size();
+        }
+    }
+
 
 }

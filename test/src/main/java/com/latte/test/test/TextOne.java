@@ -30,4 +30,8 @@ public class TextOne extends BottomItemDelegate implements DefaultContract.IDefa
 
     }
 
+    @Override
+    public void onResult(boolean flag, String result) {
+
+    }
 }

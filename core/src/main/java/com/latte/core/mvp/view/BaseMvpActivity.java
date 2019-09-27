@@ -72,7 +72,9 @@ public abstract class BaseMvpActivity<P extends IBasePresenter> extends BaseActi
         }
     }
 
-  /*  @Override
+
+
+    /*  @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (onBackPress != null && onBackPress.setBackPress()) {
             return true;

@@ -11,6 +11,7 @@ import com.latte.core.delegate.BottomItemDelegate;
 import com.latte.core.delegate.BottomTabBean;
 import com.latte.core.delegate.ItemBuilder;
 import com.latte.core.delegate.TabItemDelegate;
+import com.latte.core.delegate.TabItemSlideDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
@@ -25,7 +26,7 @@ import java.util.LinkedHashMap;
  * @description
  */
 @CreatePresenter(DefaultPresenterImpl.class)
-public class BottomDelegate extends TabItemDelegate  {
+public class BottomSlideDelegate extends TabItemSlideDelegate  {
 
     @Override
     public LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder) {

@@ -1,5 +1,6 @@
 package com.latte.mvpApp.example;
 import com.car.delegate.manager.BottomDelegate;
+import com.car.delegate.manager.BottomSlideDelegate;
 import com.latte.core.delegate.base.BaseDelegate;
 
 import com.latte.core.mvp.factory.CreatePresenter;
@@ -16,11 +17,11 @@ import com.latte.core.mvp.view.BaseMvpActivity;
  * @description 主Activity
  */
 @CreatePresenter(DefaultPresenterImpl.class)
-public class ExampleActivity extends BaseMvpActivity implements DefaultContract.IDefaultView{
+public class ExampleActivity extends BaseMvpActivity {
 
     @Override
     public BaseDelegate setRootDelegate() {
-        return new BottomDelegate();
+        return new BottomSlideDelegate();
     }
 
     @Override

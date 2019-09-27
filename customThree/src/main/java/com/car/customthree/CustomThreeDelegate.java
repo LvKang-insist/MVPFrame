@@ -24,4 +24,5 @@ public class CustomThreeDelegate extends BottomItemDelegate {
     public void BindView(View view) {
 
     }
+
 }

@@ -1,6 +1,7 @@
 package com.latte.core.mvp.mvpdefault;
 
 import com.latte.core.mvp.presenter.IBasePresenter;
+import com.latte.core.mvp.view.BaseMvpFragment;
 import com.latte.core.mvp.view.IBaseView;
 
 /**
@@ -11,6 +12,10 @@ import com.latte.core.mvp.view.IBaseView;
  * @description 默认的mvp 实现接口
  */
 public class DefaultContract {
-    public interface IDefaultView extends IBaseView{}
-    public interface IDefaultPresenter extends IBasePresenter<IDefaultView>{}
+    public interface IDefaultView extends IBaseView{
+        void onResult( boolean flag, String result);
+    }
+    public interface IDefaultPresenter extends IBasePresenter<IDefaultView>{
+        void request(BaseMvpFragment mvpFragment, String url, String p);
+    }
 }

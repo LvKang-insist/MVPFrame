@@ -13,9 +13,9 @@ import com.latte.core.mvp.view.IBaseView;
  * @time 2019/8/30 17:12
  * @description P层的工厂，通过注解 CreatePresenter 来生成 P层的实例
  */
-public class PresenterFactoryImpl{
+public class PresenterFactoryImpl<V extends IBaseView, P extends BasePresenter<V, BaseModel>>{
 
-    public static <V extends IBaseView, P extends BasePresenter<V, BaseModel>> P createPresenterFactory(Class<?> viewClass) {
+    /*public static <V extends IBaseView, P extends BasePresenter<V, BaseModel>> P createPresenterFactory(Class<?> viewClass) {
         CreatePresenter annotation = viewClass.getAnnotation(CreatePresenter.class);
         Class<P> pClass = null;
         if (annotation != null) {
@@ -29,6 +29,33 @@ public class PresenterFactoryImpl{
             e.printStackTrace();
         }
         return null;
+    }*/
+
+    private Class<P> mPresenterClass;
+
+    private PresenterFactoryImpl(Class<P> presenterClass) {
+        mPresenterClass = presenterClass;
     }
+
+    public static  <V extends IBaseView, P extends BasePresenter<V, BaseModel>> P createPresenterFactory(Class<?> viewClass) {
+        CreatePresenter annotation = viewClass.getAnnotation(CreatePresenter.class);
+        Class<P> pClass = null;
+        if (annotation != null) {
+            pClass = (Class<P>) annotation.value();
+        }
+        return pClass != null ? new PresenterFactoryImpl<>(pClass).createPresenter() : null;
+    }
+
+
+    private P createPresenter() {
+
+        try {
+            return mPresenterClass.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Presenter 创建失败，请确定是否声明了 @CreatePresenter");
+        }
+
+    }
+
 
 }
