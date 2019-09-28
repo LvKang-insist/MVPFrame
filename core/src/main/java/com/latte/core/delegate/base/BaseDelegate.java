@@ -42,6 +42,7 @@ public abstract class BaseDelegate extends Fragment implements ISupportFragment 
 
 
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

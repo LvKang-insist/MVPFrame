@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -12,7 +12,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME  : project.getName() ]
+            }
+        }
     }
 
     buildTypes {
@@ -30,4 +34,7 @@ android {
 
 dependencies {
     implementation project(path: ':core')
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+
 }

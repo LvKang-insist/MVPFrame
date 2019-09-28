@@ -9,6 +9,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.latte.core.delegate.base.PermissionCheckerDelegate;
 import com.latte.core.mvp.factory.PresenterFactoryImpl;
 import com.latte.core.latte.Latte;
@@ -38,6 +39,9 @@ public abstract class BaseMvpFragment<P extends IBasePresenter> extends Permissi
 
     private View rootView;
 
+    public <T extends BaseMvpFragment> T getParentDelegate(){
+        return (T)getParentFragment();
+    }
 
     @Nullable
     @Override
@@ -56,6 +60,7 @@ public abstract class BaseMvpFragment<P extends IBasePresenter> extends Permissi
             throw new NullPointerException("Presenter is null ! Do you return null in createPresenter()");
         }
         mPresenter.onMvpAttachView(this, savedInstanceState);
+        ARouter.getInstance().inject(this);
         Latte.getBaseMvpActivity().setOnBackPressListener(this);
 
 //        绑定 ButterKnife

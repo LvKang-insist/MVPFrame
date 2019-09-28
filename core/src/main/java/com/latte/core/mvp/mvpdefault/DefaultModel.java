@@ -20,15 +20,12 @@ public class DefaultModel extends BaseModel {
         if (mLiveData == null){
             mLiveData = new MutableLiveData<>();
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1500);
-                    mLiveData.postValue("请求成功");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                mLiveData.postValue("请求成功");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }).start();
         return mLiveData;
