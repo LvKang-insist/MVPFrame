@@ -20,7 +20,7 @@ import me.yokeyword.fragmentation.ISupportFragment;
  * @description
  */
 @CreatePresenter(DefaultPresenterImpl.class)
-@Route(path = "/one/selectDelegate")
+@Route(path = "/frag/fragment")
 public class SelectDelegate extends BaseMvpFragment<DefaultPresenterImpl> {
 
     @OnClick(R2.id.select_back)

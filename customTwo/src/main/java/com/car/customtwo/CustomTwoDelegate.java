@@ -7,6 +7,7 @@ import com.hjq.toast.ToastUtils;
 import com.latte.core.delegate.BottomItemDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
+import com.latte.core.mvp.view.BaseMvpFragment;
 
 import butterknife.OnClick;
 
@@ -24,7 +25,18 @@ public class CustomTwoDelegate extends BottomItemDelegate {
     @OnClick(R2.id.two_btn)
     void onBtnClick(){
         ToastUtils.show("跳");
-        ARouter.getInstance().build("/one/selectDelegate").navigation();
+        try {
+            Class<?> aClass = Class.forName("com.car.customone.SelectDelegate");
+            getParentDelegate().getSupportDelegate().start((BaseMvpFragment) aClass.newInstance());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

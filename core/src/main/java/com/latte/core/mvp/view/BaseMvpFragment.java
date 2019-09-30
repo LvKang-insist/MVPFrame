@@ -60,7 +60,6 @@ public abstract class BaseMvpFragment<P extends IBasePresenter> extends Permissi
             throw new NullPointerException("Presenter is null ! Do you return null in createPresenter()");
         }
         mPresenter.onMvpAttachView(this, savedInstanceState);
-        ARouter.getInstance().inject(this);
         Latte.getBaseMvpActivity().setOnBackPressListener(this);
 
 //        绑定 ButterKnife
