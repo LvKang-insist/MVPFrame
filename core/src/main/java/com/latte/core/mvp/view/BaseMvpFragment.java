@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.latte.core.delegate.base.PermissionCheckerDelegate;
 import com.latte.core.mvp.factory.PresenterFactoryImpl;
 import com.latte.core.latte.Latte;

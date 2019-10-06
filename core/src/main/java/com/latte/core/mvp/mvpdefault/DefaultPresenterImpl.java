@@ -1,10 +1,14 @@
 package com.latte.core.mvp.mvpdefault;
 
+import android.util.Log;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.latte.core.mvp.presenter.BasePresenter;
 import com.latte.core.mvp.view.BaseMvpFragment;
+
+import java.util.WeakHashMap;
 
 /**
  * @author 345 QQ:1831712732
@@ -22,11 +26,11 @@ public class DefaultPresenterImpl extends BasePresenter<DefaultContract.IDefault
     }
 
     @Override
-    public void request(BaseMvpFragment mvpFragment, String url, String p) {
+    public void request(BaseMvpFragment mvpFragment, String url, WeakHashMap param) {
         DefaultModel defaultModel = new ViewModelProvider.NewInstanceFactory().create(DefaultModel.class);
-        defaultModel.request(url,p)
-                .observe(mvpFragment, (Observer<String>) s -> {
-                    getView().onResult(true,"请求成功");
+        defaultModel.request(url,param)
+                .observe(mvpFragment, (Observer<String>) result -> {
+                    getView().onResult(true,result);
                 });
     }
 

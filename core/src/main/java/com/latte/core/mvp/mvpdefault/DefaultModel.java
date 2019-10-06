@@ -3,6 +3,9 @@ package com.latte.core.mvp.mvpdefault;
 import androidx.lifecycle.MutableLiveData;
 
 import com.latte.core.mvp.model.BaseModel;
+import com.latte.core.net.rx.RxRequest;
+
+import java.util.WeakHashMap;
 
 /**
  * @author 345 QQ:1831712732
@@ -16,18 +19,17 @@ public class DefaultModel extends BaseModel {
     private MutableLiveData<String> mLiveData;
 
     @Override
-    public MutableLiveData request(String url, Object... objects) {
-        if (mLiveData == null){
+    public MutableLiveData request(String url, WeakHashMap param) {
+        if (mLiveData == null) {
             mLiveData = new MutableLiveData<>();
         }
-        new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-                mLiveData.postValue("请求成功");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        RxRequest.onGetRx(url, param, (flag, result) -> {
+            if (flag) {
+                mLiveData.setValue(result);
+            }else {
+                mLiveData.setValue(null);
             }
-        }).start();
+        });
         return mLiveData;
     }
 }

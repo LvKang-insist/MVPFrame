@@ -2,22 +2,13 @@ package com.car.customone;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-
-import androidx.fragment.app.Fragment;
-
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.hjq.toast.ToastUtils;
 import com.latte.core.delegate.BottomItemDelegate;
-import com.latte.core.delegate.base.BaseDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
 import com.latte.core.mvp.view.BaseMvpFragment;
-
 import butterknife.OnClick;
-import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
  * @author 345 QQ:1831712732
@@ -31,15 +22,12 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
 
     private Class<?> aClass;
 
-    @OnClick(R2.id.btn)
+    @OnClick(R2.id.t1)
     void onBtn() {
-
         try {
             Class<?> aClass = Class.forName("com.car.customone.SelectDelegate");
-
             if (aClass != null) {
                 getParentDelegate().getSupportDelegate().start((BaseMvpFragment) aClass.newInstance());
-
             } else {
                 ToastUtils.show("空");
             }
@@ -52,7 +40,6 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
             e.printStackTrace();
         }
 
-
     }
 
     @Override
@@ -62,20 +49,13 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
 
     @Override
     public void BindView(View view) {
-        getPresenter().request(this, "", "");
+        getPresenter().request(this, "LvKang-insist/ImitateQQMusic/blob/master/core/src/main/java/com/admin/core/net/RestCreator.java", null);
     }
 
     @Override
     public void onResult(boolean flag, String result) {
         if (flag) {
-           /* getParentDelegate()
-                    .getSupportDelegate()
-                    .extraTransaction()
-                    .setCustomAnimations(R.anim.a1, R.anim.a2,
-                            R.anim.a, R.anim.b)
-                    .start(SelectDelegate.newInstance());*/
+           ToastUtils.show(result);
         }
     }
-
-
 }

@@ -1,8 +1,6 @@
 package com.car.customtwo;
 
 import android.view.View;
-
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.hjq.toast.ToastUtils;
 import com.latte.core.delegate.BottomItemDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;

@@ -11,11 +11,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [ AROUTER_MODULE_NAME  : project.getName() ]
-            }
-        }
     }
 
     buildTypes {
@@ -32,11 +27,9 @@ android {
 }
 
 dependencies {
-    api project(path: ':core')
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    implementation project(path: ':core')
     implementation project(path: ':customThree')
     implementation project(path: ':customFour')
     implementation project(path: ':customOne')
     implementation project(path: ':customTwo')
-    api 'com.alibaba:arouter-api:1.5.0'
 }

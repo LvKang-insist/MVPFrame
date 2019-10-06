@@ -4,6 +4,8 @@ import androidx.annotation.CallSuper;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.WeakHashMap;
+
 /**
  * @author 345 QQ:1831712732
  * @name MvpFrame
@@ -29,5 +31,5 @@ public abstract class BaseModel<T> extends ViewModel {
         return data;
     }
 
-    public abstract MutableLiveData<T> request(String url, Object... objects);
+    public abstract MutableLiveData<T> request(String url,  WeakHashMap param);
 }

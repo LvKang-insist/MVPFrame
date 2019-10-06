@@ -1,11 +1,8 @@
 package com.car.customone;
 
 import android.view.View;
-
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hjq.toast.ToastUtils;
 import com.latte.core.mvp.factory.CreatePresenter;
-import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
 import com.latte.core.mvp.view.BaseMvpFragment;
 
@@ -20,7 +17,6 @@ import me.yokeyword.fragmentation.ISupportFragment;
  * @description
  */
 @CreatePresenter(DefaultPresenterImpl.class)
-@Route(path = "/frag/fragment")
 public class SelectDelegate extends BaseMvpFragment<DefaultPresenterImpl> {
 
     @OnClick(R2.id.select_back)

@@ -4,6 +4,8 @@ import com.latte.core.mvp.presenter.IBasePresenter;
 import com.latte.core.mvp.view.BaseMvpFragment;
 import com.latte.core.mvp.view.IBaseView;
 
+import java.util.WeakHashMap;
+
 /**
  * @author 345 QQ:1831712732
  * @name MvpFrame
@@ -16,6 +18,6 @@ public class DefaultContract {
         void onResult( boolean flag, String result);
     }
     public interface IDefaultPresenter extends IBasePresenter<IDefaultView>{
-        void request(BaseMvpFragment mvpFragment, String url, String p);
+        void request(BaseMvpFragment mvpFragment, String url, WeakHashMap param);
     }
 }
