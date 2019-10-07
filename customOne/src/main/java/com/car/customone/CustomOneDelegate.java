@@ -7,7 +7,8 @@ import com.latte.core.delegate.BottomItemDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
-import com.latte.core.mvp.view.BaseMvpFragment;
+import com.latte.core.util.dialog.CustomDialog;
+
 import butterknife.OnClick;
 
 /**
@@ -24,22 +25,21 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
 
     @OnClick(R2.id.t1)
     void onBtn() {
-        try {
-            Class<?> aClass = Class.forName("com.car.customone.SelectDelegate");
-            if (aClass != null) {
-                getParentDelegate().getSupportDelegate().start((BaseMvpFragment) aClass.newInstance());
-            } else {
-                ToastUtils.show("空");
-            }
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        }
-
+        CustomDialog.Builder()
+                .setContentView(R.layout.dialog)
+                .setCancelable(false)
+                .build()
+                .setText(R.id.tv_dialog_title,"我是标题")
+                .setText(R.id.tv_dialog_message,"我是内容")
+                .setListener(R.id.tv_dialog_cancel, (dialog, view) -> {
+                    ToastUtils.show("取消");
+                    dialog.dismiss();
+                })
+                .setListener(R.id.tv_dialog_confirm, (dialog, view) -> {
+                    ToastUtils.show("成功");
+                    dialog.dismiss();
+                })
+                .show(getChildFragmentManager(),"id");
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
     @Override
     public void onResult(boolean flag, String result) {
         if (flag) {
-           ToastUtils.show(result);
+            Log.e("--------" , "onResult: "+result );
         }
     }
 }
