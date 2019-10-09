@@ -8,13 +8,13 @@
     app:cardCornerRadius="15dp"
     app:cardElevation="0px">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textStyle="bold"
             tools:text="标题" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_dialog_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,12 +44,12 @@
             android:layout_marginTop="10dp"
             android:background="#ECECEC" />
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_dialog_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -67,7 +67,7 @@
                 android:layout_height="match_parent"
                 android:background="#ECECEC" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_dialog_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -78,8 +78,8 @@
                 android:text="确定"
                 android:textColor="#007AFF"
                 android:textSize="14sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.cardview.widget.CardView>

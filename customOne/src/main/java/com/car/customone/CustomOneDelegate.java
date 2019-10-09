@@ -1,13 +1,16 @@
 package com.car.customone;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import com.hjq.toast.ToastUtils;
 import com.latte.core.delegate.BottomItemDelegate;
 import com.latte.core.mvp.factory.CreatePresenter;
 import com.latte.core.mvp.mvpdefault.DefaultContract;
 import com.latte.core.mvp.mvpdefault.DefaultPresenterImpl;
-import com.latte.core.util.dialog.CustomDialog;
+import com.latte.core.ui.dialog.BaseFragDialog;
+import com.latte.core.ui.dialog.DateDialog;
+import com.latte.core.ui.dialog.ToastDialog;
 
 import butterknife.OnClick;
 
@@ -25,8 +28,9 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
 
     @OnClick(R2.id.t1)
     void onBtn() {
-        CustomDialog.Builder()
+       /* BaseFragDialog.Builder()
                 .setContentView(R.layout.dialog)
+                .setAnimation(R.style.BottomAnimStyle)
                 .setCancelable(false)
                 .build()
                 .setText(R.id.tv_dialog_title,"我是标题")
@@ -39,7 +43,23 @@ public class CustomOneDelegate extends BottomItemDelegate<DefaultPresenterImpl> 
                     ToastUtils.show("成功");
                     dialog.dismiss();
                 })
-                .show(getChildFragmentManager(),"id");
+                .show(getChildFragmentManager(),"id");*/
+
+        /*DateDialog.DateBuilder()
+                .setContentView(R.layout.dialog)
+                .setAnimation(R.style.BottomAnimStyle)
+                .setCancelable(false)
+                .setGravity(Gravity.CENTER)
+                .build()
+                .show(getChildFragmentManager(),"");*/
+
+        ToastDialog.ToastBuilder()
+                .setContentView(R.layout.dialog_toast)
+                .setCancelable(false)
+                .build()
+                .setType(ToastDialog.Type.WARN)
+                .setMessage("警告")
+                .show(getChildFragmentManager(),"toast");
     }
 
     @Override
